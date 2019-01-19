@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Discount;
 use Illuminate\Http\Request;
+use App\Repositories\Contracts\SaleRepositoryInterface;
+use App\Repositories\Contracts\DiscountRepositoryInterface;
+use App\Repositories\Contracts\ProductRepositoryInterface;
+use App\Http\Requests\StoreDiscount;
 
 class DiscountController extends Controller
 {
@@ -12,9 +16,25 @@ class DiscountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    protected $sale;
+    protected $discount;
+    protected $product;
+
+    public function __construct(SaleRepositoryInterface $sale, DiscountRepositoryInterface $discount, ProductRepositoryInterface $product){
+
+        $this->sale = $sale;
+        $this->discount = $discount;
+        $this->product = $product;
+        
+    }
+
+    public function index($id)
     {
-        //
+        $sale = $this->sale->show($id);
+        $discounts = $this->discount->all($id);
+        $products = $this->product->all();
+
+        return view('discounts.index', compact('sale', 'discounts', 'products'));
     }
 
     /**
@@ -24,7 +44,7 @@ class DiscountController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -33,53 +53,53 @@ class DiscountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(StoreDiscount $request)
+    {   
+        $sale_id = request('sale');
+        //add discount to db
+        $discount = $this->discount->create($request);
+
+       return redirect('sales/discounts/'.$sale_id); 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Discount  $discount
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Discount $discount)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Discount  $discount
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Discount $discount)
+    public function edit($id)
     {
-        //
+        $discount = $this->discount->show($id);
+
+        return view('discounts.edit', compact('discount'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Discount  $discount
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Discount $discount)
+    public function update(Request $request, $id)
     {
-        //
+        //edit discount
+        $discount = $this->discount->update($request, $id);
+
+        //get sale ID
+        $sale_id = $this->discount->show($id)->sale_id;
+
+        return redirect('sales/discounts/'.$sale_id); 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Discount  $discount
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Discount $discount)
+    public function destroy($id)
     {
-        //
+        
+        //get sale ID
+        $sale_id = $this->discount->show($id)->sale_id;
+
+        $discount = $this->discount->delete($id);
+
+        return redirect('sales/discounts/'.$sale_id);
     }
 }

@@ -11,12 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
+
+
+Route::group(['middleware' => 'auth'], function (){
+
+
+Route::get('/', function () {
+    return view('home');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('categories', 'CategoryController');
+Route::resource('products', 'ProductController');
+Route::resource('sales', 'SaleController');
+Route::resource('discounts', 'DiscountController');
+
+Route::get('sales/discounts/{id}', 'DiscountController@index');
+
+});

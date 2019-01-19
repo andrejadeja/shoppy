@@ -29,18 +29,4 @@ class User extends Authenticatable
     ];
 
 
-    public function user_create()
-    {
-        return $this->belongsTo('App\Users', 'delete_user_id');
-    }
-
-    public function user_update()
-    {
-        return $this->belongsTo('App\Users', 'delete_user_id');
-    }
-
-    public function user_delete()
-    {
-        return $this->belongsTo('App\Users', 'delete_user_id');
-    }
 }
