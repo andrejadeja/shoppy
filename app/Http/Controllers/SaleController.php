@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Sale;
 use Illuminate\Http\Request;
+use App\Repositories\Contracts\SaleRepositoryInterface;
+use App\Http\Requests\StoreSale;
 
 class SaleController extends Controller
 {
@@ -12,9 +14,22 @@ class SaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    protected $sale;
+    protected $product;
+
+    public function __construct(SaleRepositoryInterface $sale){
+
+        $this->sale = $sale;
+
+    }
+
+
     public function index()
     {
-        //
+       $sales = $this->sale->all();
+
+       return view('sales.index', compact('sales'));
     }
 
     /**
@@ -24,7 +39,7 @@ class SaleController extends Controller
      */
     public function create()
     {
-        //
+        return view('sales.create'); 
     }
 
     /**
@@ -33,9 +48,12 @@ class SaleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSale $request)
     {
-        //
+        //add product to db
+        $sale = $this->sale->create($request);
+
+       return redirect('sales'); 
     }
 
     /**
@@ -49,37 +67,30 @@ class SaleController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Sale  $sale
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sale $sale)
-    {
-        //
+    public function edit($id)
+    {   
+        $sale = $this->sale->show($id);
+
+        return view('sales.edit', compact('sale'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Sale  $sale
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Sale $sale)
+   
+    public function update(StoreSale $request, $id)
     {
-        //
+        //edit sale
+        $sale = $this->sale->update($request, $id);
+
+        return redirect('sales'); 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Sale  $sale
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Sale $sale)
+    
+    public function destroy($id)
     {
-        //
+        $sale = $this->sale->delete($id);
+
+        return redirect('sales');
     }
+
+
+
 }
