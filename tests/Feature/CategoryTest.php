@@ -9,16 +9,15 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class CategoryTest extends TestCase
 {	
 
-	use RefreshDatabase;
     /**
      * A basic test example.
      *
      * @return void
      */
-    public function testExample()
+    public function testCreate()
     {
-        $category = factory(Category::class, 3)->create();
+        $category = factory(\App\Category::class, 3)->create();
 
-        $this->assertTrue($category);
+        $this->assertCount(3, $category);
     }
 }
