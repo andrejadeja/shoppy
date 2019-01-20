@@ -59,9 +59,7 @@ class ShopController extends Controller
 
         //add shop to db
         $shop = $this->shop->create($request);
-
-        if(!$shop)
-            Session::flash('message','This user already own one shop!');
+            
 
        return redirect('shops');
     }

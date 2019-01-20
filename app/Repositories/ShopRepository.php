@@ -3,6 +3,7 @@
 use \App\Repositories\Contracts\ShopRepositoryInterface;
 use \App\Shop;
 use Auth;
+use Session;
 
 
 class ShopRepository implements ShopRepositoryInterface{
@@ -28,6 +29,10 @@ class ShopRepository implements ShopRepositoryInterface{
             $shop->create_user_id = Auth::user()->id;
             $shop->save();
         }
+
+        else
+            Session::flash('message','This user already own one shop!');
+        
        
     }
 
