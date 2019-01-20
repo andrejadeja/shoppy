@@ -28,6 +28,7 @@ Route::resource('categories', 'CategoryController');
 Route::resource('products', 'ProductController');
 Route::resource('sales', 'SaleController');
 Route::resource('discounts', 'DiscountController');
+Route::resource('shops', 'ShopController');
 
 Route::get('sales/discounts/{id}', 'DiscountController@index');
 

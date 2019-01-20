@@ -28,5 +28,31 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function role()
+    {
+        return $this->belongsTo('App\Role', 'role_id');
+    }
+
+    public function shop()
+    {
+        return $this->hasOne('App\Shop', 'owner_id');
+    }
+
+
+    public function isAdmin()
+    {    
+        if($this->role->role == 'Administrator')
+
+        return true;
+
+    }
+
+    public function isWorker()
+    {
+        if($this->role->role == 'Worker')
+
+        return true;
+    }
+
 
 }

@@ -27,6 +27,7 @@ class StoreProduct extends FormRequest
             'category' => 'required',
             'product' => 'required',
             'product_number' => 'required|unique:products',
+            'description' => 'required',
             'price' => 'required',
             'image' => 'required | mimes:jpeg,jpg,png',
         ];

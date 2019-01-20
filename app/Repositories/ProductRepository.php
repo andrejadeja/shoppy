@@ -10,7 +10,7 @@ class ProductRepository implements ProductRepositoryInterface{
 
 	public function all(){
 
-		$product = Product::all();
+		$product = Product::ofRole()->get();
 
 		return $product;
 	}
@@ -21,9 +21,14 @@ class ProductRepository implements ProductRepositoryInterface{
         Storage::disk('public')->putFileAs('', $request->file('image'), $request->file('image')->getClientOriginalName());
 
         $product = new Product;
+
+        if(Auth::user()->shop)
+        $product->shop_id = Auth::user()->shop->id;
+
         $product->category_id = $request->category;
         $product->product = $request->product;
         $product->product_number = $request->product_number;
+        $product->description = $request->description;
         $product->price = $request->price;
         $product->image = url('/').'/uploads/'.$request->file('image')->getClientOriginalName();
         $product->create_user_id = Auth::user()->id;
@@ -36,6 +41,7 @@ class ProductRepository implements ProductRepositoryInterface{
         $product->category_id = $request->category;
         $product->product = $request->product;
         $product->product_number = $request->product_number;
+        $product->description = $request->description;
         $product->price = $request->price;
 
         if($request->file('image'))
@@ -54,6 +60,8 @@ class ProductRepository implements ProductRepositoryInterface{
     public function show($id){
 
     	$product = Product::find($id);
+
+        return $product;
         
     }
 }

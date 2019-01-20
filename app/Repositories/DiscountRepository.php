@@ -18,6 +18,10 @@ class DiscountRepository implements DiscountRepositoryInterface{
     public function create($request){
 
         $discount = new Discount;
+
+        if(Auth::user()->shop)
+        $discount->shop_id = Auth::user()->shop->id;
+
         $discount->sale_id = $request->sale;
         $discount->product_id = $request->product;
         $discount->discount = $request->discount;

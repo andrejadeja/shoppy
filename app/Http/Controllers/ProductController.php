@@ -8,6 +8,7 @@ use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use App\Http\Requests\StoreProduct;
 use App\Http\Requests\EditProduct;
+use App\Policies\ProductPolicy;
 
 class ProductController extends Controller
 {
@@ -71,6 +72,8 @@ class ProductController extends Controller
         $categories = $this->category->all();
         $product = $this->product->show($id);
 
+        $this->authorize('change', $product);
+
         return view('products.edit', compact('product', 'categories'));
     }
 
@@ -90,7 +93,11 @@ class ProductController extends Controller
 
 
     public function destroy($id)
-    {
+    {    
+        $product = $this->product->show($id);
+        $this->authorize('change', $product);
+
+        
         $product = $this->product->delete($id);
 
         return redirect('products');
