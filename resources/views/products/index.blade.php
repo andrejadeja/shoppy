@@ -13,8 +13,14 @@
               <tr>
                 <th width="5%">#</th>
                 <th>Image</th>
+                
+                @if(Auth::user()->isAdmin()) 
+                  <th>Shop</th>
+                @endif
+
                 <th>Product</th>
                 <th>Product number</th>
+                <th>Desription</th>
                 <th>Price</th>
                 <th>Category</th>
                 <th>Created by</th>
@@ -30,9 +36,22 @@
               <tr>
                 <td>{{ $p->id }}</td>
                 <td><img src="{{ $p->image }}" width="50px"></td>
+                <td>
+                  @if($p->shop && Auth::user()->isAdmin()) 
+                    {{ $p->shop->name }}
+                  @endif
+                </td>
                 <td>{{ $p->product }}</td>
                 <td>{{ $p->product_number }}</td>
-                <td>{{ $p->price }}€</td>
+                <td>{{ $p->description }}</td>
+                <td>
+                    @if($p->valid_discount())
+                      <p style="text-decoration: line-through; color:gray">{{ $p->price }}€</p>
+                        {{ $p->price - $p->price*$p->discount->discount/100 }}€
+                    @else
+                        {{ $p->price }}€
+                    @endif
+                </td>
                 <td>{{ $p->category->name }}</td>
                 <td>{{ $p->user_create->name }}</td>
                 <td>{{ date('d/m/Y', strtotime($p->created_at)) }}</td>

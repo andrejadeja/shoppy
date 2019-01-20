@@ -6,6 +6,7 @@ use App\Sale;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\SaleRepositoryInterface;
 use App\Http\Requests\StoreSale;
+use App\Policies\SalePolicy;
 
 class SaleController extends Controller
 {
@@ -71,6 +72,8 @@ class SaleController extends Controller
     {   
         $sale = $this->sale->show($id);
 
+        $this->authorize('change', $sale);
+
         return view('sales.edit', compact('sale'));
     }
 
@@ -85,7 +88,11 @@ class SaleController extends Controller
 
     
     public function destroy($id)
-    {
+    {   
+
+        $sale = $this->sale->show($id);
+        $this->authorize('change', $sale);
+
         $sale = $this->sale->delete($id);
 
         return redirect('sales');

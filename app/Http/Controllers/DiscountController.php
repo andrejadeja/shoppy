@@ -8,6 +8,7 @@ use App\Repositories\Contracts\SaleRepositoryInterface;
 use App\Repositories\Contracts\DiscountRepositoryInterface;
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use App\Http\Requests\StoreDiscount;
+use App\Policies\DiscountPolicy;
 
 class DiscountController extends Controller
 {
@@ -67,6 +68,8 @@ class DiscountController extends Controller
     {
         $discount = $this->discount->show($id);
 
+        $this->authorize('change', $discount);
+
         return view('discounts.edit', compact('discount'));
     }
 
@@ -94,7 +97,9 @@ class DiscountController extends Controller
      */
     public function destroy($id)
     {
-        
+        $discount = $this->discount->show($id);
+        $this->authorize('change', $discount);
+
         //get sale ID
         $sale_id = $this->discount->show($id)->sale_id;
 

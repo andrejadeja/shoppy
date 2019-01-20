@@ -4,7 +4,7 @@
 <div class="page-header" style="margin-top: 80px">
     <div class="row">
         <div class="col-lg-12">
-        <h1>New Category</h1>
+        <h1>New Sale</h1>
 
           @if (count($errors))
            <div class="alert alert-info">
@@ -31,26 +31,16 @@
 
             
 
-            <div class="container">
-              <div class="row">
-                  <div class='col-sm-6'>
-                      <div class="form-group">
-                      <label>Valid Until</label>
-                          <div class='input-group date' id='datetimepicker1'>
-                              <input type='text' name="valid_until" class="form-control" {{ old('valid_until') }}/>
-                              <span class="input-group-addon">
-                                  <span class="glyphicon glyphicon-calendar"></span>
-                              </span>
-                          </div>
+           <div class="container">
+                <div class="row">
+                    <div class="form-group col-lg-6"> 
+                      <label class="control-label" for="date">Valid Until</label>
+                      <input class="form-control" id="date" name="valid_until" placeholder="MM/DD/YYY" type="text" autocomplete="off" />
                       </div>
-                  </div>
-                  <script type="text/javascript">
-                      $(function () {
-                          $('#datetimepicker1').datetimepicker();
-                      });
-                  </script>
-              </div>
+
+               </div>
           </div>
+
 
 
           

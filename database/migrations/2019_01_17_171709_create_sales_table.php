@@ -15,12 +15,12 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
-            //$table->integer('shop_id')->index()->unsigned();
             $table->string('title');
             $table->timestamp('valid_until');
             $table->integer('create_user_id')->index()->nullable()->unsigned();
             $table->integer('update_user_id')->index()->nullable()->unsigned();
             $table->integer('delete_user_id')->index()->nullable()->unsigned();
+            $table->softDeletes();
             $table->timestamps();
 
         });

@@ -35,24 +35,13 @@
             
 
             <div class="container">
-              <div class="row">
-                  <div class='col-sm-6'>
-                      <div class="form-group">
-                      <label>Valid Until</label>
-                          <div class='input-group date' id='datetimepicker1'>
-                              <input type='text' name="valid_until" class="form-control" value="{{ date('d/m/Y', strtotime($sale->valid_until)) }}">
-                              <span class="input-group-addon">
-                                  <span class="glyphicon glyphicon-calendar"></span>
-                              </span>
-                          </div>
+                <div class="row">
+                    <div class="form-group col-lg-6"> 
+                      <label class="control-label" for="date">Valid Until</label>
+                      <input class="form-control" id="date" name="valid_until" placeholder="DD/MM/YYY" type="text" autocomplete="off" value="{{ date('d/m/Y', strtotime($sale->valid_until))}}"/>
                       </div>
-                  </div>
-                  <script type="text/javascript">
-                      $(function () {
-                          $('#datetimepicker1').datetimepicker();
-                      });
-                  </script>
-              </div>
+
+               </div>
           </div>
 
 

@@ -45,6 +45,10 @@
               <input type="text" name="product_number" placeholder="Product number" class="form-control" value="{{ $product->product_number }}">
             </div>
 
+            <div class="form-group col-lg-6"> 
+            <label>Product Description</label>
+              <textarea name="description" placeholder="Product description" class="form-control" >{{ $product->description }}</textarea>
+            </div>
 
             <div class="form-group col-lg-6"> 
             <label>Price</label>

@@ -9,7 +9,7 @@ class CategoryRepository implements CategoryRepositoryInterface{
 
 	public function all(){
 
-		$category = Category::all();
+		$category = Category::ofRole()->get();
 
 		return $category;
 	}
@@ -18,6 +18,10 @@ class CategoryRepository implements CategoryRepositoryInterface{
     public function create($request){
 
         $category = new Category;
+        
+        if(Auth::user()->shop)
+        $category->shop_id = Auth::user()->shop->id;
+
         $category->name = $request->name;
         $category->create_user_id = Auth::user()->id;
         $category->save();

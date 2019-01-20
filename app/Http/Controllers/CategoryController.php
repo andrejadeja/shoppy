@@ -6,6 +6,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Http\Requests\StoreCategory;
+use App\Policies\CategoryPolicy;
 
 class CategoryController extends Controller
 {
@@ -63,6 +64,8 @@ class CategoryController extends Controller
     {
         $category = $this->category->show($id);
 
+        $this->authorize('change', $category);
+
         return view('categories.edit', compact('category'));
 
     }
@@ -78,6 +81,8 @@ class CategoryController extends Controller
         //edit category
         $category = $this->category->update($request, $id);
 
+        $this->authorize('change', $category);
+
         return redirect('categories');  
     }
 
@@ -88,6 +93,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $category = $this->category->show($id);
+        $this->authorize('change', $category);
+
         $category = $this->category->delete($id);
 
         return redirect('categories');
