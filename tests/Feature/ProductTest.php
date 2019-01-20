@@ -9,8 +9,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ProductTest extends TestCase
 {	
 
-	use RefreshDatabase;
-
 
     /**
      * A basic test example.
@@ -19,8 +17,8 @@ class ProductTest extends TestCase
      */
     public function testExample()
     {	
-    	$product = factory(Product::class, 5)->create();
+    	$category = factory(\App\Product::class, 3)->create();
 
-        $this->assertTrue($product);
+        $this->assertCount(3, $category);
     }
 }
