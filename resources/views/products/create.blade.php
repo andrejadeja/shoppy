@@ -4,7 +4,7 @@
 <div class="page-header" style="margin-top: 80px">
     <div class="row">
         <div class="col-lg-12">
-        <h1>New Category</h1>
+        <h1>Add Product</h1>
 
           @if (count($errors))
            <div class="alert alert-info">
@@ -41,7 +41,12 @@
 
             <div class="form-group col-lg-6"> 
             <label>Product Number</label>
-              <input type="text" name="product_number" placeholder="Product number" class="form-control" value="{{ old('product_number') }}">
+              <input type="text" name="product_number" placeholder="Product number" class="form-control" value="{{ old('product_number') }}" autocomplete="off">
+            </div>
+
+            <div class="form-group col-lg-6"> 
+            <label>Product Description</label>
+              <textarea name="description" placeholder="Product description" class="form-control" >{{ old('description') }}</textarea>
             </div>
 
 

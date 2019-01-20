@@ -26,4 +26,23 @@ class Category extends Model
     {
         return $this->belongsTo('App\User', 'delete_user_id');
     }
+
+
+    public function shop()
+    {
+        return $this->belongsTo('App\Shop', 'shop_id');
+    }
+
+    public function scopeOfRole($query){
+
+        if(auth()->user()->isAdmin())
+            return $query;
+
+        else 
+            return $query->whereHas('shop', function ($q){
+                $q->where('owner_id', auth()->user()->id);
+            });
+
+
+    }
 }

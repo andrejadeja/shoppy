@@ -19,13 +19,17 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at');
             $table->string('password');
-            $table->string('role');
+            $table->integer('role_id')->index()->unsigned();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
         });
 
-
+        Schema::table('users', function (Blueprint $table) {
+            
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+    
+        });
        
     }
 

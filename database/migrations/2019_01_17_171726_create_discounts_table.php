@@ -21,6 +21,7 @@ class CreateDiscountsTable extends Migration
             $table->integer('create_user_id')->index()->nullable()->unsigned();
             $table->integer('update_user_id')->index()->nullable()->unsigned();
             $table->integer('delete_user_id')->index()->nullable()->unsigned();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -28,6 +29,7 @@ class CreateDiscountsTable extends Migration
         Schema::table('discounts', function (Blueprint $table) {
     
             $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('create_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('update_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('delete_user_id')->references('id')->on('users')->onDelete('cascade');

@@ -55,7 +55,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-        <h1>Products</h1>
+        <h1>Products on sale</h1>
 
         
 
@@ -64,8 +64,14 @@
               <tr>
                 <th width="5%">#</th>
                 <th>Image</th>
+
+                @if(Auth::user()->isAdmin()) 
+                  <th>Shop</th>
+                @endif
+                
                 <th>Product</th>
                 <th>Product number</th>
+                <th>Description</th>
                 <th>Price</th>
                 <th>Discount</th>
                 <th>Category</th>
@@ -82,8 +88,14 @@
               <tr>
                 <td>{{ $d->id }}</td>
                 <td><img src="{{ $d->product->image }}" width="50px"></td>
+                <td>
+                  @if($d->shop && Auth::user()->isAdmin()) 
+                    {{ $d->shop->name }}
+                  @endif
+                </td>
                 <td>{{ $d->product->product }}</td>
                 <td>{{ $d->product->product_number }}</td>
+                <td>{{ $d->product->description }}</td>
                 <td>{{ $d->product->price - $d->product->price*$d->discount/100 }}€</td>
                 <td>{{ $d->discount }}%</td>
                 <td>{{ $d->product->category->name }}</td>

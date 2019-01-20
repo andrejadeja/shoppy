@@ -3,13 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    public function shop()
-    {
-        return $this->belongsTo('App\Shop', 'shop_id');
-    }
+
+    use SoftDeletes;
+
+
+    protected $dates = ['deleted_at'];
+
+
 
     public function category()
     {
@@ -37,4 +41,35 @@ class Product extends Model
     {
         return $this->belongsTo('App\User', 'delete_user_id');
     }
+
+    public function shop()
+    {
+        return $this->belongsTo('App\Shop', 'shop_id');
+    }
+
+    public function scopeOfRole($query){
+
+        if(auth()->user()->isAdmin())
+            return $query;
+
+        else 
+            return $query->whereHas('shop', function ($q){
+                $q->where('owner_id', auth()->user()->id);
+            });
+
+
+    }
+
+
+    public function valid_discount(){
+
+        if($this->discount && strtotime($this->discount->sale->valid_until) >= strtotime(date('Y-m-d')))
+        return $this->price;
+
+        else 
+        return NULL;
+    }
+
+
+
 }

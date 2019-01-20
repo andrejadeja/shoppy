@@ -42,5 +42,10 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Repositories\Contracts\DiscountRepositoryInterface', 
             'App\Repositories\DiscountRepository'
             );
+
+        $this->app->bind(
+            'App\Repositories\Contracts\ShopRepositoryInterface', 
+            'App\Repositories\ShopRepository'
+            );
     }
 }
