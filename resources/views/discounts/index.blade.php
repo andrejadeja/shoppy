@@ -68,7 +68,7 @@
                 @if(Auth::user()->isAdmin()) 
                   <th>Shop</th>
                 @endif
-                
+
                 <th>Product</th>
                 <th>Product number</th>
                 <th>Description</th>
@@ -96,7 +96,9 @@
                 <td>{{ $d->product->product }}</td>
                 <td>{{ $d->product->product_number }}</td>
                 <td>{{ $d->product->description }}</td>
-                <td>{{ $d->product->price - $d->product->price*$d->discount/100 }}€</td>
+                <td>
+                <p style="text-decoration: line-through; color:gray">{{ $d->product->price }}€</p>
+                {{ $d->product->price - $d->product->price*$d->discount/100 }}€</td>
                 <td>{{ $d->discount }}%</td>
                 <td>{{ $d->product->category->name }}</td>
                 <td>{{ $d->user_create->name }}</td>

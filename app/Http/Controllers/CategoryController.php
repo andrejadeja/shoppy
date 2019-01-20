@@ -81,7 +81,6 @@ class CategoryController extends Controller
         //edit category
         $category = $this->category->update($request, $id);
 
-        $this->authorize('change', $category);
 
         return redirect('categories');  
     }
