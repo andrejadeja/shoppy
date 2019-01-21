@@ -44,8 +44,12 @@ class ProductRepository implements ProductRepositoryInterface{
         $product->description = $request->description;
         $product->price = $request->price;
 
-        if($request->file('image'))
-        $product->image = url('/').'/uploads/'.$request->file('image')->getClientOriginalName();
+        if($request->file('image')){
+            Storage::disk('public')->putFileAs('', $request->file('image'), $request->file('image')->getClientOriginalName());
+            $product->image = url('/').'/uploads/'.$request->file('image')->getClientOriginalName(); 
+
+        }
+        
 
         $product->update_user_id = Auth::user()->id;
         $product->save();
