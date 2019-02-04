@@ -20,7 +20,7 @@ class ProductPolicy
     public function change(User $user, Product $product)
     {
     
-        if($user->isAdmin())
+        if($user->isAn('admin'))
             return true;
         
 

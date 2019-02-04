@@ -1,50 +1,15 @@
-<?php namespace App\Repositories;
+<?php
 
-use \App\Repositories\Contracts\CategoryRepositoryInterface;
-use \App\Category;
-use Auth;
+namespace App\Repositories;
 
-class CategoryRepository implements CategoryRepositoryInterface{
+use Prettus\Repository\Contracts\RepositoryInterface;
 
-
-	public function all(){
-
-		$category = Category::ofRole()->get();
-
-		return $category;
-	}
-
-
-    public function create($request){
-
-        $category = new Category;
-        
-        if(Auth::user()->shop)
-        $category->shop_id = Auth::user()->shop->id;
-
-        $category->name = $request->name;
-        $category->create_user_id = Auth::user()->id;
-        $category->save();
-    }
-
-    public function update($request, $id){
-        
-        $category = Category::find($id);
-        $category->name = $request->name;
-        $category->update_user_id = Auth::user()->id;
-        $category->save();
-    }
-
-    public function delete($id){
-
-    	$category = Category::destroy($id);
-
-    }
-
-    public function show($id){
-
-    	$category = Category::find($id);
-        
-        return $category;
-    }
+/**
+ * Interface CategoryRepository.
+ *
+ * @package namespace App\Repositories;
+ */
+interface CategoryRepository extends RepositoryInterface
+{
+    //
 }

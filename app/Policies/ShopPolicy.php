@@ -20,7 +20,7 @@ class ShopPolicy
 
     public function before(User $user)
     {
-        return $user->role->role === 'Administrator';
+        return $user->isAn('admin');
     
     }
 

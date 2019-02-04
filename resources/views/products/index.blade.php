@@ -14,7 +14,7 @@
                 <th width="5%">#</th>
                 <th>Image</th>
                 
-                @if(Auth::user()->isAdmin()) 
+                @if(Auth::user()->isAn('admin')) 
                   <th>Shop</th>
                 @endif
 
@@ -36,11 +36,11 @@
               <tr>
                 <td>{{ $p->id }}</td>
                 <td><img src="{{ $p->image }}" width="50px"></td>
-                <td>
-                  @if($p->shop && Auth::user()->isAdmin()) 
-                    {{ $p->shop->name }}
-                  @endif
-                </td>
+                  <td>@if($p->shop && Auth::user()->isAn('admin'))
+                          {{ $p->shop->name }}
+                      @endif
+                  </td>
+                
                 <td>{{ $p->product }}</td>
                 <td>{{ $p->product_number }}</td>
                 <td>{{ $p->description }}</td>

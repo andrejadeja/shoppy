@@ -19,7 +19,7 @@ class CategoryPolicy
      */
     public function change(User $user, Category $category)
     {
-        if($user->isAdmin())
+        if($user->isAn('admin'))
             return true;
 
 

@@ -22,7 +22,7 @@
 
           <div class="form-group col-lg-6"> 
             <label>Product Category</label>
-              <select class="form-control" name="category">
+              <select class="form-control" name="category_id">
 
               <option value="{{ old('category') }}">Choose category</option>
 

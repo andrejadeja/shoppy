@@ -23,29 +23,25 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(
-            'App\Repositories\Contracts\CategoryRepositoryInterface', 
-            'App\Repositories\CategoryRepository'
+        \App::bind(
+            'App\Repositories\CategoryRepository',
+            'App\Repositories\CategoryRepositoryEloquent'
             );
 
-        $this->app->bind(
-            'App\Repositories\Contracts\ProductRepositoryInterface', 
-            'App\Repositories\ProductRepository'
+        \App::bind(
+            'App\Repositories\ProductRepository',
+            'App\Repositories\ProductRepositoryEloquent'
             );
 
-        $this->app->bind(
-            'App\Repositories\Contracts\SaleRepositoryInterface', 
-            'App\Repositories\SaleRepository'
+        \App::bind(
+            'App\Repositories\ShopRepository',
+            'App\Repositories\ShopRepositoryEloquent'
             );
 
-        $this->app->bind(
-            'App\Repositories\Contracts\DiscountRepositoryInterface', 
-            'App\Repositories\DiscountRepository'
-            );
 
-        $this->app->bind(
-            'App\Repositories\Contracts\ShopRepositoryInterface', 
-            'App\Repositories\ShopRepository'
+        \App::bind(
+            'App\Repositories\SaleRepository',
+            'App\Repositories\SaleRepositoryEloquent'
             );
     }
 }

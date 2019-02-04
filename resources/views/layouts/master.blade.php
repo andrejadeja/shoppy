@@ -37,13 +37,18 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
           
-           @if(Auth::user()->isAdmin())
+            @if(Auth::user()->isAn('admin'))
             	<li><a href="{{ URL::to('shops') }}">Shops</a></li>
+            	<li><a href="{{ URL::to('categories') }}">Categories</a></li>
+	            <li><a href="{{ URL::to('products') }}">Products</a></li>
+	            <li><a href="{{ URL::to('sales') }}">Sales</a></li>
             @endif
 
+            @if(Auth::user()->isAn('owner') && Auth::user()->shop != NULL)
             <li><a href="{{ URL::to('categories') }}">Categories</a></li>
             <li><a href="{{ URL::to('products') }}">Products</a></li>
             <li><a href="{{ URL::to('sales') }}">Sales</a></li>
+            @endif
 
           </ul>
 

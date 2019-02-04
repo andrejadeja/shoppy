@@ -20,7 +20,7 @@ class DiscountPolicy
     public function change(User $user, Discount $discount)
     {
     
-        if($user->isAdmin())
+        if($user->isAn('admin'))
             return true;
         
 

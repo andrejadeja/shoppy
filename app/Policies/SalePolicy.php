@@ -20,7 +20,7 @@ class SalePolicy
     public function change(User $user, Sale $sale)
     {
     
-        if($user->isAdmin())
+        if($user->isAn('admin'))
             return true;
         
 

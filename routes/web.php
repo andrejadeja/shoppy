@@ -18,18 +18,18 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function (){
 
 
-Route::get('/', function () {
-    return view('home');
-});
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
-Route::resource('categories', 'CategoryController');
-Route::resource('products', 'ProductController');
+Route::resource('categories', CategoriesController::class);
+Route::resource('products', ProductsController::class);
+Route::resource('shops', ShopsController::class);
+Route::resource('sales', SalesController::class);
+/*Route::resource('products', 'ProductController');
 Route::resource('sales', 'SaleController');
 Route::resource('discounts', 'DiscountController');
 Route::resource('shops', 'ShopController');
 
-Route::get('sales/discounts/{id}', 'DiscountController@index');
+Route::get('sales/discounts/{id}', 'DiscountController@index');*/
 
 });
