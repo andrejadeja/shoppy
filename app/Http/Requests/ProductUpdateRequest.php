@@ -17,7 +17,7 @@ class ProductUpdateRequest extends FormRequest
             return true;
 
 
-        elseif(auth()->user()->shop && auth()->user()->shop->id == $product->shop_id);
+        elseif(auth()->user()->shop && auth()->user()->shop->id == request('shop_id'));
             return true;
     }
 
@@ -29,7 +29,10 @@ class ProductUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'product' => 'required',
+            'category_id' => 'required',
+            'product_number' => 'required',
+            'price' => 'required',
         ];
     }
 }

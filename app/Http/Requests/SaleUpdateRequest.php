@@ -13,7 +13,12 @@ class SaleUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if(auth()->user()->isAn('admin'))
+            return true;
+
+
+        elseif(auth()->user()->shop && auth()->user()->shop->id == request('shop_id'));
+            return true;
     }
 
     /**
@@ -24,7 +29,8 @@ class SaleUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'valid_until' => 'required'
         ];
     }
 }

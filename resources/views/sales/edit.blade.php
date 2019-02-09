@@ -4,7 +4,7 @@
 <div class="page-header" style="margin-top: 80px">
     <div class="row">
         <div class="col-lg-12">
-        <h1>New Category</h1>
+        <h1>New Sale</h1>
 
           @if (count($errors))
            <div class="alert alert-info">
@@ -16,6 +16,13 @@
               </ul>
           </div>
           @endif
+
+          @if(isset($message))
+          <div class="alert alert-info">
+          {{ dd(message) }}
+          </div>
+          @endif
+          
                 
           <form name="categories" action="{{ URL::to('sales/'.$sale->id) }}" method="POST">
           @csrf

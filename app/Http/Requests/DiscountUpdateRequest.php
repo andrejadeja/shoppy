@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ShopCreateRequest extends FormRequest
+class DiscountUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,8 +13,7 @@ class ShopCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->isAn('admin'))
-            return true;
+        return false;
     }
 
     /**

@@ -12,6 +12,8 @@ use App\Http\Requests\ShopUpdateRequest;
 use App\Repositories\ShopRepository;
 use App\Validators\ShopValidator;
 
+use Bouncer;
+
 /**
  * Class ShopsController.
  *
@@ -61,6 +63,16 @@ class ShopsController extends Controller
         return view('shops.index', compact('shops'));
     }
 
+
+    public function create()
+    {
+        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+
+        $users = \App\User::whereIs('owner')->get();
+
+        return view('shops.create', compact('users'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -76,7 +88,7 @@ class ShopsController extends Controller
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $shop = $this->repository->create($request->all());
+            $shop = $this->repository->create(array_merge($request->all(), ['create_user_id' => auth()->user()->id]));
 
             $response = [
                 'message' => 'Shop created.',
@@ -132,8 +144,9 @@ class ShopsController extends Controller
     public function edit($id)
     {
         $shop = $this->repository->find($id);
+        $users = \App\User::whereIs('owner')->get();
 
-        return view('shops.edit', compact('shop'));
+        return view('shops.edit', compact('shop', 'users'));
     }
 
     /**
@@ -152,7 +165,7 @@ class ShopsController extends Controller
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $shop = $this->repository->update($request->all(), $id);
+            $shop = $this->repository->update(array_merge($request->all(), ['update_user_id' => auth()->user()->id]), $id);
 
             $response = [
                 'message' => 'Shop updated.',

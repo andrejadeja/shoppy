@@ -5,6 +5,8 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use App\ObservantTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Shop.
@@ -14,13 +16,15 @@ use Prettus\Repository\Traits\TransformableTrait;
 class Shop extends Model implements Transformable
 {
     use TransformableTrait;
+    use ObservantTrait;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $guarded = [];
 
 
     public function owner()
@@ -32,4 +36,7 @@ class Shop extends Model implements Transformable
     {
         return $this->belongsTo('App\User', 'create_user_id');
     }
+
+
+    protected $dates = ['deleted_at'];
 }

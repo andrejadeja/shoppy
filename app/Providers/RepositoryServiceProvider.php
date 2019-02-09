@@ -43,5 +43,10 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Repositories\SaleRepository',
             'App\Repositories\SaleRepositoryEloquent'
             );
+
+        \App::bind(
+            'App\Repositories\DiscountRepository',
+            'App\Repositories\DiscountRepositoryEloquent'
+            );
     }
 }

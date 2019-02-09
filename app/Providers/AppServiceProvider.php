@@ -15,6 +15,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+       /* \App\Entities\Category::creating(function ($category) {
+                    
+            dd(get_called_class());
+            $category->create_user_id = auth()->user()->id;
+
+            if(auth()->user()->isAn('owner') && auth()->user()->shop)
+                $category->shop_id = auth()->user()->shop->id;
+        });*/
     }
 
     /**

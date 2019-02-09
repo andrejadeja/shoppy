@@ -23,7 +23,7 @@
 
           <div class="form-group col-lg-6"> 
             <label>Shop owner</label>
-              <select class="form-control" name="owner">
+              <select class="form-control" name="owner_id">
 
                 @foreach($users as $u)
                   <option value="{{ $u->id }}" @if($shop->owner_id == $u->id) selected @endif>{{ $u->name }}</option>

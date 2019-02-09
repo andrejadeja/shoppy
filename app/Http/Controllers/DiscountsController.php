@@ -7,35 +7,35 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\CategoryCreateRequest;
-use App\Http\Requests\CategoryUpdateRequest;
-use App\Repositories\CategoryRepository;
-use App\Validators\CategoryValidator;
+use App\Http\Requests\DiscountCreateRequest;
+use App\Http\Requests\DiscountUpdateRequest;
+use App\Repositories\DiscountRepository;
+use App\Validators\DiscountValidator;
 
 /**
- * Class CategoriesController.
+ * Class DiscountsController.
  *
  * @package namespace App\Http\Controllers;
  */
-class CategoriesController extends Controller
+class DiscountsController extends Controller
 {
     /**
-     * @var CategoryRepository
+     * @var DiscountRepository
      */
     protected $repository;
 
     /**
-     * @var CategoryValidator
+     * @var DiscountValidator
      */
     protected $validator;
 
     /**
-     * CategoriesController constructor.
+     * DiscountsController constructor.
      *
-     * @param CategoryRepository $repository
-     * @param CategoryValidator $validator
+     * @param DiscountRepository $repository
+     * @param DiscountValidator $validator
      */
-    public function __construct(CategoryRepository $repository, CategoryValidator $validator)
+    public function __construct(DiscountRepository $repository, DiscountValidator $validator)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
@@ -46,54 +46,43 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(\App\Entities\Sale $sale)
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $discounts = $this->repository->all();
 
-        $this->repository->pushCriteria(new \App\Criteria\OwnerCriteria());
-
-        $categories = $this->repository->all();
-
+        $products = \App\Entities\Product::where('shop_id', auth()->user()->shop->id)->get();
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $categories,
+                'data' => $discounts,
             ]);
         }
 
-        return view('categories.index', compact('categories'));
-    }
-
-
-    public function create()
-    {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-
-
-        return view('categories.create');
+        return view('discounts.index', compact('discounts', 'sale', 'products'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  CategoryCreateRequest $request
+     * @param  DiscountCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(CategoryCreateRequest $request)
+    public function store(DiscountCreateRequest $request)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $category = $this->repository->create($request->all());
+            $discount = $this->repository->create($request->all());
 
             $response = [
-                'message' => 'Category created.',
-                'data'    => $category->toArray(),
+                'message' => 'Discount created.',
+                'data'    => $discount->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -123,16 +112,16 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        $category = $this->repository->find($id);
+        $discount = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $category,
+                'data' => $discount,
             ]);
         }
 
-        return view('categories.show', compact('category'));
+        return view('discounts.show', compact('discount'));
     }
 
     /**
@@ -144,32 +133,32 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        $category = $this->repository->find($id);
+        $discount = $this->repository->find($id);
 
-        return view('categories.edit', compact('category'));
+        return view('discounts.edit', compact('discount'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  CategoryUpdateRequest $request
+     * @param  DiscountUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(CategoryUpdateRequest $request, $id)
+    public function update(DiscountUpdateRequest $request, $id)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $category = $this->repository->update($request->all(), $id);
+            $discount = $this->repository->update($request->all(), $id);
 
             $response = [
-                'message' => 'Category updated.',
-                'data'    => $category->toArray(),
+                'message' => 'Discount updated.',
+                'data'    => $discount->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -207,11 +196,11 @@ class CategoriesController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'Category deleted.',
+                'message' => 'Discount deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        return redirect()->back()->with('message', 'Category deleted.');
+        return redirect()->back()->with('message', 'Discount deleted.');
     }
 }

@@ -61,6 +61,15 @@ class SalesController extends Controller
         return view('sales.index', compact('sales'));
     }
 
+
+    public function create()
+    {
+        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+
+
+        return view('sales.create');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -75,6 +84,11 @@ class SalesController extends Controller
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+
+            //change date format and add create_user_id to request
+            $request['valid_until'] = date('Y-m-d', strtotime($request['valid_until']));
+            $request['create_user_id'] = auth()->user()->id;
+
 
             $sale = $this->repository->create($request->all());
 
@@ -152,6 +166,9 @@ class SalesController extends Controller
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
+            $request['valid_until'] = date('Y-m-d', strtotime($request['valid_until']));
+            $request['create_user_id'] = auth()->user()->id;
+
             $sale = $this->repository->update($request->all(), $id);
 
             $response = [
@@ -163,6 +180,7 @@ class SalesController extends Controller
 
                 return response()->json($response);
             }
+
 
             return redirect()->back()->with('message', $response['message']);
         } catch (ValidatorException $e) {

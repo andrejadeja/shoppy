@@ -13,7 +13,8 @@ class SaleCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if(auth()->user()->isAn('admin') || auth()->user()->isAn('owner'))
+            return true;
     }
 
     /**
@@ -24,7 +25,8 @@ class SaleCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'valid_until' => 'required'
         ];
     }
 }

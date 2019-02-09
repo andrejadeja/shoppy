@@ -23,7 +23,7 @@
 
           <div class="form-group col-lg-6"> 
             <label>Shop owner</label>
-              <select class="form-control" name="owner">
+              <select class="form-control" name="owner_id">
 
               <option value="{{ old('owner') }}">Choose Owner</option>
 

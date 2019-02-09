@@ -9,11 +9,11 @@ use App\ObservantTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Product.
+ * Class Discount.
  *
  * @package namespace App\Entities;
  */
-class Product extends Model implements Transformable
+class Discount extends Model implements Transformable
 {
     use TransformableTrait;
     use ObservantTrait;
@@ -24,10 +24,14 @@ class Product extends Model implements Transformable
      *
      * @var array
      */
-    protected $guarded = [''];
+    protected $guarded = [];
 
-    public function category() {
-    	return $this->belongsTo('App\Entities\Category', 'category_id');
+    public function product() {
+        return $this->belongsTo('App\Entities\Product', 'product_id');
+    }
+
+    public function sale() {
+        return $this->belongsTo('App\Entities\Sale', 'sale_id');
     }
 
     public function user_create()
@@ -40,11 +44,6 @@ class Product extends Model implements Transformable
         return $this->belongsTo('App\User', 'update_user_id');
     }
 
-    
-    public function valid_discount(){
-
-    	return false;
-    }
 
     protected $dates = ['deleted_at'];
 }

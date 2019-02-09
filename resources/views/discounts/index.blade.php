@@ -22,10 +22,10 @@
           <form name="discounts" action="{{ URL::to('discounts') }}" method="POST">
           @csrf
             
-            <input type="hidden" name="sale" value="{{ $sale->id }}">
+            <input type="hidden" name="sale_id" value="{{ $sale->id }}">
             <div class="form-group col-lg-6"> 
             <label>Products</label>
-              <select class="form-control" name="product">
+              <select class="form-control" name="product_id">
 
               <option value="{{ old('product') }}">Choose product</option>
 
@@ -65,7 +65,7 @@
                 <th width="5%">#</th>
                 <th>Image</th>
 
-                @if(Auth::user()->isAdmin()) 
+                @if(Auth::user()->isAn('admin')) 
                   <th>Shop</th>
                 @endif
 

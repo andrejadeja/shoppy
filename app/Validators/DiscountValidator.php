@@ -6,11 +6,11 @@ use \Prettus\Validator\Contracts\ValidatorInterface;
 use \Prettus\Validator\LaravelValidator;
 
 /**
- * Class SaleValidator.
+ * Class DiscountValidator.
  *
  * @package namespace App\Validators;
  */
-class SaleValidator extends LaravelValidator
+class DiscountValidator extends LaravelValidator
 {
     /**
      * Validation Rules
@@ -21,6 +21,4 @@ class SaleValidator extends LaravelValidator
         ValidatorInterface::RULE_CREATE => [],
         ValidatorInterface::RULE_UPDATE => [],
     ];
-
-    
 }

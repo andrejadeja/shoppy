@@ -86,7 +86,8 @@ class ProductsController extends Controller
             
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $product = $this->repository->create(array_merge($request->all(), ['create_user_id' => auth()->user()->id]));
+            
+            $product = $this->repository->create($request->all());
 
             $response = [
                 'message' => 'Product created.',
@@ -164,7 +165,7 @@ class ProductsController extends Controller
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $product = $this->repository->update(array_merge($request->all(), ['update_user_id' => auth()->user()->id]), $id);
+            $product = $this->repository->update($request->all(), $id);
 
             $response = [
                 'message' => 'Product updated.',

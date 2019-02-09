@@ -36,10 +36,12 @@
               <tr>
                 <td>{{ $p->id }}</td>
                 <td><img src="{{ $p->image }}" width="50px"></td>
-                  <td>@if($p->shop && Auth::user()->isAn('admin'))
-                          {{ $p->shop->name }}
-                      @endif
-                  </td>
+                 @if($p->shop && Auth::user()->isAn('admin'))
+                    <td>
+                       {{ $p->shop->name }}
+                    </td>
+                  @endif
+                  
                 
                 <td>{{ $p->product }}</td>
                 <td>{{ $p->product_number }}</td>

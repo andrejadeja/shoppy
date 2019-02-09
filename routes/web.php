@@ -25,6 +25,8 @@ Route::resource('categories', CategoriesController::class);
 Route::resource('products', ProductsController::class);
 Route::resource('shops', ShopsController::class);
 Route::resource('sales', SalesController::class);
+Route::resource('discounts', DiscountsController::class);
+Route::get('sales/discounts/{sale}', 'DiscountsController@index');
 /*Route::resource('products', 'ProductController');
 Route::resource('sales', 'SaleController');
 Route::resource('discounts', 'DiscountController');

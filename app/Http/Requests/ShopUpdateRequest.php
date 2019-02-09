@@ -13,7 +13,8 @@ class ShopUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if(auth()->user()->isAn('admin'))
+            return true;
     }
 
     /**

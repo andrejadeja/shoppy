@@ -37,7 +37,7 @@ class User extends Authenticatable
 
     public function shop()
     {
-        return $this->hasOne('App\Shop', 'owner_id');
+        return $this->hasOne('App\Entities\Shop', 'owner_id');
     }
 
 

@@ -17,7 +17,7 @@ class CategoryUpdateRequest extends FormRequest
             return true;
 
 
-        elseif(auth()->user()->shop && auth()->user()->shop->id == $category->shop_id);
+        elseif(auth()->user()->shop && auth()->user()->shop->id == request('shop_id'));
             return true;
     }
 
@@ -29,7 +29,7 @@ class CategoryUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required'
         ];
     }
 }
